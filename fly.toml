@@ -1,0 +1,31 @@
+# fly.toml - Fly.io deployment configuration
+# See https://fly.io/docs/reference/configuration/
+
+app = "launch-calendar-tracker"
+primary_region = "iad"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  PORT = "8080"
+  DATABASE_TYPE = "sqlite"
+  SQLITE_PATH = "/app/data/launch-tracker.db"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+# Persistent volume for SQLite database
+[mounts]
+  source = "launch_tracker_data"
+  destination = "/app/data"

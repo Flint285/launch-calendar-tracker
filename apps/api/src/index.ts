@@ -1,7 +1,8 @@
 import { config } from 'dotenv';
 import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
+import { dirname, resolve, join } from 'path';
 import express from 'express';
+import * as fs from 'fs';
 
 // Load .env from monorepo root
 const __filename = fileURLToPath(import.meta.url);
@@ -15,6 +16,7 @@ import { plansRouter } from './routes/plans.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Middleware
 app.use(cors({
@@ -32,6 +34,24 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/plans', plansRouter);
+
+// Serve static frontend in production
+if (isProduction) {
+  const publicPath = join(__dirname, '../public');
+
+  // Check if public directory exists
+  if (fs.existsSync(publicPath)) {
+    app.use(express.static(publicPath));
+
+    // SPA fallback - serve index.html for all non-API routes
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api')) {
+        return next();
+      }
+      res.sendFile(join(publicPath, 'index.html'));
+    });
+  }
+}
 
 // Error handler
 app.use(errorHandler);

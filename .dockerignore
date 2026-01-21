@@ -1,0 +1,17 @@
+node_modules
+.git
+.gitignore
+*.md
+.env
+.env.*
+!.env.example
+data/
+*.db
+*.db-journal
+*.db-wal
+.DS_Store
+Thumbs.db
+dist/
+.turbo
+.vercel
+.fly
