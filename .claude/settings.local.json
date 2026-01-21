@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install)",
+      "Bash(npm install:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker compose:*)",
+      "Bash(powershell -Command \"cd ''C:\\\\Users\\\\Flint\\\\Desktop\\\\Development\\\\Projects\\\\Launch Calendar Tracker''; docker compose up -d\")",
+      "Bash(powershell -Command:*)",
+      "Bash(docker ps:*)",
+      "Bash(pnpm db:push:*)",
+      "Bash(pnpm drizzle-kit push:*)",
+      "Bash(pnpm exec drizzle-kit:*)",
+      "Bash(pnpm --filter @launch-tracker/db db:push:*)",
+      "Bash(pnpm db:seed:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "mcp__Windows-MCP__Powershell-Tool",
+      "Bash(npm run dev:*)",
+      "Bash(timeout 5 tail:*)",
+      "Bash(cmd //c \"taskkill /PID 12996 /F\")",
+      "Bash(dir:*)",
+      "Bash(xargs:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(pushd \"C:\\\\Users\\\\Flint\\\\Desktop\\\\Development\\\\Projects\\\\Launch Calendar Tracker\")",
+      "Bash(popd)",
+      "Bash(git -C \"C:/Users/Flint/Desktop/Development/Projects/Launch Calendar Tracker\" status)",
+      "Bash(git -C \"C:/Users/Flint/Desktop/Development/Projects/Launch Calendar Tracker\" add .)",
+      "Bash(git -C \"C:/Users/Flint/Desktop/Development/Projects/Launch Calendar Tracker\" commit -m \"$\\(cat <<''EOF''\nInitial commit: Launch Calendar Tracker\n\nA full-stack TypeScript monorepo for planning, executing, and tracking\ntime-boxed product launches with task management, KPI tracking, and reporting.\n\nFeatures:\n- Launch plan creation with date windows and strategy tags\n- Task system with daily checklists, priorities, and dependencies\n- Calendar view with task counts and completion percentages\n- KPI tracking with target monitoring and status indicators\n- Automatic alerts when KPIs fall outside targets\n- CSV export reports\n\nTech stack:\n- Frontend: Vite + React + Tailwind CSS\n- Backend: Express API with JWT auth\n- Database: PostgreSQL + Drizzle ORM\n- Monorepo: pnpm workspaces\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}

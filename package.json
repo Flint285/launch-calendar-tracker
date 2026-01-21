@@ -1,0 +1,35 @@
+{
+  "name": "launch-calendar-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Launch Calendar Tracker - Plan, execute, and track time-boxed product launches",
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "dev:api": "pnpm --filter @launch-tracker/api dev",
+    "dev:web": "pnpm --filter @launch-tracker/web dev",
+    "build": "pnpm run --parallel build",
+    "build:api": "pnpm --filter @launch-tracker/api build",
+    "build:web": "pnpm --filter @launch-tracker/web build",
+    "db:generate": "pnpm --filter @launch-tracker/db generate",
+    "db:migrate": "pnpm --filter @launch-tracker/db migrate",
+    "db:push": "pnpm --filter @launch-tracker/db push",
+    "db:seed": "pnpm --filter @launch-tracker/db seed",
+    "db:studio": "pnpm --filter @launch-tracker/db studio",
+    "lint": "pnpm run --parallel lint",
+    "typecheck": "pnpm run --parallel typecheck",
+    "clean": "pnpm run --parallel clean"
+  },
+  "keywords": [
+    "launch",
+    "calendar",
+    "tracker",
+    "product-launch",
+    "task-management"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
