@@ -1,12 +1,4 @@
-import { config } from 'dotenv';
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
 import express from 'express';
-
-// Load .env from monorepo root
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-config({ path: resolve(__dirname, '../../../.env') });
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { errorHandler } from './middleware/error.js';

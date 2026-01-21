@@ -1,13 +1,24 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import * as schema from './schema/index.js';
+import { getDatabaseType, isSqlite } from './schema/columns.js';
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/launch_tracker';
+// Lazy loading of database drivers to prevent unnecessary connections
+let db: any;
+let schema: any;
 
-// For query purposes
-const queryClient = postgres(connectionString);
-export const db = drizzle(queryClient, { schema });
+const dbType = getDatabaseType();
 
-// Export schema for use in other packages
+if (dbType === 'sqlite') {
+  // Only load SQLite driver when needed
+  const sqliteModule = await import('./drivers/sqlite.js');
+  db = sqliteModule.createSqliteDatabase();
+  schema = sqliteModule.schema;
+} else {
+  // Only load PostgreSQL driver when needed
+  const postgresModule = await import('./drivers/postgres.js');
+  db = postgresModule.createPostgresDatabase();
+  schema = postgresModule.schema;
+}
+
+export { db, schema };
+
+// Re-export schema types from the PostgreSQL schema for TypeScript compatibility
 export * from './schema/index.js';
-export { schema };
