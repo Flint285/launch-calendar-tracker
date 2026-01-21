@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Launch Calendar Tracker - Plan, execute, and track time-boxed product launches",
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
+  },
   "scripts": {
     "dev": "pnpm run --parallel dev",
     "dev:api": "pnpm --filter @launch-tracker/api dev",
@@ -11,10 +14,16 @@
     "build:api": "pnpm --filter @launch-tracker/api build",
     "build:web": "pnpm --filter @launch-tracker/web build",
     "db:generate": "pnpm --filter @launch-tracker/db generate",
+    "db:generate:pg": "pnpm --filter @launch-tracker/db generate:pg",
+    "db:generate:sqlite": "pnpm --filter @launch-tracker/db generate:sqlite",
     "db:migrate": "pnpm --filter @launch-tracker/db migrate",
     "db:push": "pnpm --filter @launch-tracker/db push",
+    "db:push:pg": "pnpm --filter @launch-tracker/db push:pg",
+    "db:push:sqlite": "pnpm --filter @launch-tracker/db push:sqlite",
     "db:seed": "pnpm --filter @launch-tracker/db seed",
     "db:studio": "pnpm --filter @launch-tracker/db studio",
+    "db:studio:pg": "pnpm --filter @launch-tracker/db studio:pg",
+    "db:studio:sqlite": "pnpm --filter @launch-tracker/db studio:sqlite",
     "lint": "pnpm run --parallel lint",
     "typecheck": "pnpm run --parallel typecheck",
     "clean": "pnpm run --parallel clean"

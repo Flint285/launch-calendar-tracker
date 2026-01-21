@@ -8,23 +8,32 @@
   "exports": {
     ".": "./src/index.ts",
     "./schema": "./src/schema/index.ts",
-    "./templates": "./src/seed/template-feb-2026.ts"
+    "./templates": "./src/seed/template-feb-2026.ts",
+    "./utils": "./src/utils/index.ts"
   },
   "scripts": {
     "generate": "drizzle-kit generate",
+    "generate:pg": "drizzle-kit generate --config=drizzle.config.ts",
+    "generate:sqlite": "drizzle-kit generate --config=drizzle.config.sqlite.ts",
     "migrate": "drizzle-kit migrate",
     "push": "drizzle-kit push",
+    "push:pg": "drizzle-kit push --config=drizzle.config.ts",
+    "push:sqlite": "drizzle-kit push --config=drizzle.config.sqlite.ts",
     "studio": "drizzle-kit studio",
+    "studio:pg": "drizzle-kit studio --config=drizzle.config.ts",
+    "studio:sqlite": "drizzle-kit studio --config=drizzle.config.sqlite.ts",
     "seed": "tsx src/seed/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.0.0",
     "drizzle-orm": "^0.33.0",
     "postgres": "^3.4.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/better-sqlite3": "^7.6.11",
     "drizzle-kit": "^0.24.0",
     "tsx": "^4.19.0",
     "typescript": "^5.4.5",

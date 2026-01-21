@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { db, launchPlans, tasks, kpis, kpiEntries, taskDependencies, contacts, outreachEvents, alerts, assets, notes } from '@launch-tracker/db';
+import { countAsInt, countWhere, boolOr } from '@launch-tracker/db/utils';
 import { createPlanSchema, updatePlanSchema, createTaskSchema, updateTaskSchema, createKpiSchema, createKpiEntrySchema, createContactSchema, updateContactSchema, createOutreachEventSchema, resolveAlertSchema, createAssetSchema, createNoteSchema } from '@launch-tracker/shared';
 import { eq, and, sql, asc, desc } from 'drizzle-orm';
 import { authenticate } from '../middleware/auth.js';
@@ -193,10 +194,10 @@ plansRouter.get('/:id/calendar', async (req: Request, res: Response, next: NextF
     // Get tasks grouped by date with completion stats
     const taskStats = await db.select({
       date: tasks.dueDate,
-      totalTasks: sql<number>`count(*)::int`,
-      completedTasks: sql<number>`count(*) filter (where ${tasks.status} = 'complete')::int`,
-      hasBlockedTasks: sql<boolean>`bool_or(${tasks.status} = 'blocked')`,
-      hasCriticalPriorityTasks: sql<boolean>`bool_or(${tasks.priority} = 'high')`,
+      totalTasks: countAsInt(),
+      completedTasks: countWhere(sql`${tasks.status} = 'complete'`),
+      hasBlockedTasks: boolOr(sql`${tasks.status} = 'blocked'`),
+      hasCriticalPriorityTasks: boolOr(sql`${tasks.priority} = 'high'`),
     })
       .from(tasks)
       .where(eq(tasks.planId, planId))
@@ -901,10 +902,10 @@ plansRouter.get('/:id/report', async (req: Request, res: Response, next: NextFun
 
     // Get task completion summary
     const taskSummary = await db.select({
-      total: sql<number>`count(*)::int`,
-      completed: sql<number>`count(*) filter (where ${tasks.status} = 'complete')::int`,
-      skipped: sql<number>`count(*) filter (where ${tasks.status} = 'skipped')::int`,
-      blocked: sql<number>`count(*) filter (where ${tasks.status} = 'blocked')::int`,
+      total: countAsInt(),
+      completed: countWhere(sql`${tasks.status} = 'complete'`),
+      skipped: countWhere(sql`${tasks.status} = 'skipped'`),
+      blocked: countWhere(sql`${tasks.status} = 'blocked'`),
     })
       .from(tasks)
       .where(eq(tasks.planId, planId));
@@ -923,10 +924,10 @@ plansRouter.get('/:id/report', async (req: Request, res: Response, next: NextFun
     // Get outreach funnel
     const contactStats = await db.select({
       segment: contacts.segment,
-      total: sql<number>`count(*)::int`,
-      contacted: sql<number>`count(*) filter (where ${contacts.status} != 'not_contacted')::int`,
-      replied: sql<number>`count(*) filter (where ${contacts.status} in ('replied', 'booked_call', 'started_trial', 'paid_starter', 'paid_pro'))::int`,
-      converted: sql<number>`count(*) filter (where ${contacts.status} in ('paid_starter', 'paid_pro'))::int`,
+      total: countAsInt(),
+      contacted: countWhere(sql`${contacts.status} != 'not_contacted'`),
+      replied: countWhere(sql`${contacts.status} in ('replied', 'booked_call', 'started_trial', 'paid_starter', 'paid_pro')`),
+      converted: countWhere(sql`${contacts.status} in ('paid_starter', 'paid_pro')`),
     })
       .from(contacts)
       .where(eq(contacts.planId, planId))

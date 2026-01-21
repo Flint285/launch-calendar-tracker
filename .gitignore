@@ -37,6 +37,15 @@ coverage/
 
 # Drizzle
 drizzle/meta/
+drizzle-sqlite/meta/
+
+# SQLite database files
+data/*.db
+data/*.db-wal
+data/*.db-shm
+*.db
+*.db-wal
+*.db-shm
 
 # Docker
 docker-compose.override.yml

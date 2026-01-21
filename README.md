@@ -19,14 +19,14 @@ A standalone web app to plan, execute, and track time-boxed product launches wit
 
 - **Frontend**: Vite + React + Tailwind CSS
 - **Backend**: Express API
-- **Database**: PostgreSQL + Drizzle ORM
+- **Database**: SQLite (default) or PostgreSQL + Drizzle ORM
 - **Auth**: JWT with HTTP-only cookies
 
 ## Prerequisites
 
 - Node.js 18+
 - pnpm 8+
-- Docker (for local PostgreSQL)
+- Docker (only if using PostgreSQL)
 
 ## Quick Start
 
@@ -43,17 +43,22 @@ pnpm install
 cp .env.example .env
 ```
 
-Edit `.env` if you want to change defaults:
+The app uses **SQLite by default** - no additional setup required! The database file is created automatically.
+
+To use PostgreSQL instead, edit `.env`:
 ```
+DATABASE_TYPE=postgres
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/launch_tracker
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
 ```
 
-### 3. Start PostgreSQL
+### 3. Start Database (PostgreSQL only)
 
+If using PostgreSQL:
 ```bash
 docker-compose up -d
 ```
+
+Skip this step if using SQLite (default).
 
 ### 4. Run Database Migrations
 
@@ -163,6 +168,8 @@ The template will auto-generate ~70 tasks across 14 days, plus default KPIs for:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `DATABASE_TYPE` | Database type (`sqlite` or `postgres`) | `sqlite` |
+| `SQLITE_PATH` | Path to SQLite database file | `./data/launch-tracker.db` |
 | `DATABASE_URL` | PostgreSQL connection string | `postgresql://postgres:postgres@localhost:5432/launch_tracker` |
 | `JWT_SECRET` | Secret for signing JWT tokens | Required |
 | `JWT_EXPIRES_IN` | Token expiration time | `7d` |
